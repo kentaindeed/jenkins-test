@@ -4,27 +4,34 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                echo "test"
+                echo 'Hello from GitHub hook trigger'
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
-                echo 'building'
+                echo 'Building'
             }
         }
-        stage('deploy') {
+        stage('Deploy') {
             steps {
-                echo 'deploy'
+                echo 'Deploying'
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'KentaindeedAWS',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
+                        sh(script: 'aws s3 cp /var/lib/jenkins/workspace/pipeline-job s3://jenkins-test-kentaindeed-s3')
+                }
             }
         }
-        stage('test') {
+        stage('Test') {
             steps {
-                echo 'test'
+                echo 'Testing'
             }
         }
-        stage('release') {
+        stage('Release') {
             steps {
-                echo 'release'
+                echo 'Releasing'
             }
         }
     }
