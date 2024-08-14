@@ -20,7 +20,7 @@ pipeline {
                     credentialsId: 'KentaindeedAWS',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]){
-                        sh(script: 'aws s3 cp /var/lib/jenkins/workspace/pipeline-job s3://jenkins-test-kentaindeed-s3')
+                        sh(script: '/root/.local/bin/aws s3 cp /var/lib/jenkins/workspace/pipeline-job s3://jenkins-test-kentaindeed-s3')
                 }
             }
         }
